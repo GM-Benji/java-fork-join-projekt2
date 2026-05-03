@@ -14,7 +14,7 @@ public class GaussianBlur {
 
     public static void main(String[] args) {
         try {
-            File inputFile = new File("input.jpg");
+            File inputFile = new File("assets/test_image.jpg");
             if (!inputFile.exists()) {
                 System.out.println("Błąd: Nie znaleziono pliku input.jpg w katalogu głównym.");
                 return;

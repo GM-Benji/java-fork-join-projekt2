@@ -3,3 +3,6 @@
 .vscode/
 bin/
 out/
+
+output.jpg
+*_blurred.jpg
