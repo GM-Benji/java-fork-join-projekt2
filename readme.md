@@ -33,6 +33,16 @@ Podczas analizy przebiegów użycia wątków, można zauważyć, że kończą cz
 
 Wartość threshold określa w programie próg podziału zadania, czyli ile maksymalnie wierszy przetworzy pojedynczy wątek, dla wartości 1000 program wykonywał operacje przez około 650 ms, a dla wartości 100 i 10 czas wykonywania wynosił od 480 do 520 ms. Opóźnienie czasu wykonywania operacji dla wartości 1000 wynika z niedostatecznego podziału zadań. Przy wartościach 10 i 100 brak różnicy czasowej wskazuje na osiągnięcie całkowitego podziału zadań między rdzenie, a zmniejszenie wartości thresholdu poniżej 100 skutkuje zmniejszenie zapasu pamięci RAM, co może się przyczynić do awarii systemu.
 
+### Profilowanie wydajności
+
+Przebiegi zużycia procesora dla obu trybów:
+
+| Tryb sekwencyjny         | Tryb Fork-Join           |
+| ----------------------   | ----------------------   |
+| ![Przebieg CPU trybu sekwencyjnego](./assets/cpu_sekwencyjny.png)   | ![Przebieg CPU trybu Fork-Join](./assets/cpu_fork_100.png)|
+
+W trybie sekwencyjnym obciążenie CPU utrzymuje się na poziomie kilkunastu procent, co wynika z użycia pojedynczego rdzenia. Natomiast w trybie Fork-Join widoczne jest znacznie wyższe obciążenie procesora, sięgające nawet 60%. Jest to efekt równoległego przetwarzania zadań na wielu rdzeniach, co przekłada się na skrócenie czasu wykonania programu.
+
 ## Lista zadań (TODO)
 
 ### Faza 1: Architektura i bazowa logika
