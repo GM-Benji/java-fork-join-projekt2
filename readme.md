@@ -19,6 +19,18 @@ Aby przetestować aplikację:
    - `int MODE = 1;` – Uruchamia współbieżne przetwarzanie wykorzystujące pulę `ForkJoinPool`.
 3. Po uruchomieniu program wypisze w konsoli czas wykonania w milisekundach i wygeneruje nałożony filtr w pliku `output.jpg`.
 
+## Analiza techniczna
+
+### Porównanie trybów pracy
+
+W trybie sekwencyjnym algorytm obciąża tylko jeden rdzeń, co skutkuje długim czasem oczekiwania na rezultat, natomiast tryb Fork-Join równolegle rozkłada obliczenia na wszystkie dostępne rdzenie przyspieszając tym samym czterokrotnie czas operacji. Porównując obie wersje przetworzonych obrazów, można zauważyć dużo lepszą jakość przy trybie Fork-Join.
+
+### Mechanizm work-stealing
+
+Podczas analizy przebiegów użycia wątków, można zauważyć, że kończą czas w niemal identycznym momencie. Jest to skutek działania mechanizmu work-stealing, który powoduje, że wątek po skończeniu swojej kolejki zadań zamiast przejść w stan bezczynności, przejmuje najstarsze zadanie z dołu kolejki z innego obciążonego wątku, przyspieszając tym samym czas operacji.
+
+### Badanie wpływu wartości threshold
+
 ## Lista zadań (TODO)
 
 ### Faza 1: Architektura i bazowa logika
