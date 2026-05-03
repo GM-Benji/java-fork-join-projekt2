@@ -31,6 +31,8 @@ Podczas analizy przebiegów użycia wątków, można zauważyć, że kończą cz
 
 ### Badanie wpływu wartości threshold
 
+Wartość threshold określa w programie próg podziału zadania, czyli ile maksymalnie wierszy przetworzy pojedynczy wątek, dla wartości 1000 program wykonywał operacje przez około 650 ms, a dla wartości 100 i 10 czas wykonywania wynosił od 480 do 520 ms. Opóźnienie czasu wykonywania operacji dla wartości 1000 wynika z niedostatecznego podziału zadań. Przy wartościach 10 i 100 brak różnicy czasowej wskazuje na osiągnięcie całkowitego podziału zadań między rdzenie, a zmniejszenie wartości thresholdu poniżej 100 skutkuje zmniejszenie zapasu pamięci RAM, co może się przyczynić do awarii systemu.
+
 ## Lista zadań (TODO)
 
 ### Faza 1: Architektura i bazowa logika
