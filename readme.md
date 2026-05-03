@@ -58,10 +58,10 @@ W trybie sekwencyjnym obciążenie CPU utrzymuje się na poziomie kilkunastu pro
 - [x] Wdrożenie parametru określającego próg podziału (`THRESHOLD`).
 
 ### Faza 3: Profilowanie i Analiza
-- [ ] Uruchomienie aplikacji z podpiętym profilerem (np. VisualVM, JProfiler).
-- [ ] Wykonanie pomiarów czasu wykonania dla obu trybów (`MODE=0` vs `MODE=1`) na dużym obrazie (np. 4K).
-- [ ] Przeprowadzenie eksperymentów polegających na zmianie wartości `THRESHOLD` (np. 10, 100, 1000) i odnotowanie wpływu na czas wykonania.
-- [ ] Zrzuty ekranu z profilera (zużycie procesora w czasie dla obu trybów).
+- [x] Uruchomienie aplikacji z podpiętym profilerem (np. VisualVM, JProfiler).
+- [x] Wykonanie pomiarów czasu wykonania dla obu trybów (`MODE=0` vs `MODE=1`) na dużym obrazie (np. 4K).
+- [x] Przeprowadzenie eksperymentów polegających na zmianie wartości `THRESHOLD` (np. 10, 100, 1000) i odnotowanie wpływu na czas wykonania.
+- [x] Zrzuty ekranu z profilera (zużycie procesora w czasie dla obu trybów).
 
 ### Faza 4: Dokumentacja
 - [ ] Sformułowanie ostatecznych wniosków z analizy porównawczej.
