@@ -43,6 +43,14 @@ Przebiegi zużycia procesora dla obu trybów:
 
 W trybie sekwencyjnym obciążenie CPU utrzymuje się na poziomie kilkunastu procent, co wynika z użycia pojedynczego rdzenia. Natomiast w trybie Fork-Join widoczne jest znacznie wyższe obciążenie procesora, sięgające nawet 60%. Jest to efekt równoległego przetwarzania zadań na wielu rdzeniach, co przekłada się na skrócenie czasu wykonania programu.
 
+### Work-stealing
+
+Analiza wykresów z profilera ujawniła kluczową cechę frameworka Fork-Join: poszczególne wątki robotnicze kończą swoje cykle życia niemal w dokładnie tym samym momencie. Jest to bezpośredni dowód na poprawne działanie algorytmu work-stealing - gdy dany wątek opróżni swoją kolejkę, nie przechodzi w stan uśpienia (co marnowałoby czas procesora). Zamiast tego dynamicznie "kradnie" zadania z przeciwnego końca kolejki innego, wciąż obciążonego wątku.Profiler pokazuje równomierne rozłożenie obciążenia i jednoczesne wygaszanie wątków.
+
+### Wnioski końcowe
+
+Implementacja algorytmu rozmycia Gaussa z wykorzystaniem frameworka Fork-Join wykazała znaczące skrócenie czasu przetwarzania obrazu w porównaniu do metody sekwencyjnej, przy zachowaniu pełnej poprawności i identycznej jakości wyniku końcowego. Ten wzrost wydajności wynika z efektywnego rozłożenia obliczeń na wiele rdzeni procesora, co potwierdzają odczyty profilera wykazujące równomierne obciążenie wszystkich wątków dzięki mechanizmowi work-stealing. Kluczowym czynnikiem optymalizacyjnym okazał się dobór parametru threshold, którego właściwa wartość pozwala uniknąć zarówno niedostatecznego wykorzystania zasobów przy zbyt dużych porcjach danych, jak i nadmiernego obciążenia pamięci operacyjnej oraz procesora przy zbyt drobnej dekompozycji problemu.
+
 ## Lista zadań (TODO)
 
 ### Faza 1: Architektura i bazowa logika
@@ -64,11 +72,11 @@ W trybie sekwencyjnym obciążenie CPU utrzymuje się na poziomie kilkunastu pro
 - [x] Zrzuty ekranu z profilera (zużycie procesora w czasie dla obu trybów).
 
 ### Faza 4: Dokumentacja
-- [ ] Sformułowanie ostatecznych wniosków z analizy porównawczej.
-- [ ] Opisanie zjawiska "work-stealing" występującego we frameworku Fork-Join na podstawie obserwacji profilera.
-- [ ] Złożenie końcowego sprawozdania lub przygotowanie prezentacji.
+- [x] Sformułowanie ostatecznych wniosków z analizy porównawczej.
+- [x] Opisanie zjawiska "work-stealing" występującego we frameworku Fork-Join na podstawie obserwacji profilera.
+- [ ] Złożenie końcowego0 sprawozdania lub przygotowanie prezentacji.
 
-## Autorzy
+## Autorzy0
 - Mateusz Moskwin
 - Beniamin Raczyński
 - Monika Szczerba
