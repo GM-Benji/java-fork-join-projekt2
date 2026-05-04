@@ -74,9 +74,9 @@ Implementacja algorytmu rozmycia Gaussa z wykorzystaniem frameworka Fork-Join wy
 ### Faza 4: Dokumentacja
 - [x] Sformułowanie ostatecznych wniosków z analizy porównawczej.
 - [x] Opisanie zjawiska "work-stealing" występującego we frameworku Fork-Join na podstawie obserwacji profilera.
-- [ ] Złożenie końcowego0 sprawozdania lub przygotowanie prezentacji.
+- [x] Złożenie końcowego sprawozdania lub przygotowanie prezentacji.
 
-## Autorzy0
+## Autorzy
 - Mateusz Moskwin
 - Beniamin Raczyński
 - Monika Szczerba
