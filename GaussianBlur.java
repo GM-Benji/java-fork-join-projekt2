@@ -6,12 +6,19 @@ import javax.imageio.ImageIO;
 
 public class GaussianBlur {
 
-    // Jądro Gaussa 3x3
-    private static final float[] KERNEL = {
-            1 / 16f, 2 / 16f, 1 / 16f,
-            2 / 16f, 4 / 16f, 2 / 16f,
-            1 / 16f, 2 / 16f, 1 / 16f
-    };
+    // Ustawiamy promień rozmycia. Promień 10 oznacza macierz 21x21 (441 pikseli do sprawdzenia dla
+    // KAŻDEGO piksela obrazu!)
+    private static final int RADIUS = 10;
+    private static final int KERNEL_SIZE = RADIUS * 2 + 1;
+    private static final float[] KERNEL = new float[KERNEL_SIZE * KERNEL_SIZE];
+
+    // Dynamiczna inicjalizacja jądra
+    static {
+        float weight = 1.0f / (KERNEL_SIZE * KERNEL_SIZE);
+        for (int i = 0; i < KERNEL.length; i++) {
+            KERNEL[i] = weight;
+        }
+    }
 
     public static void main(String[] args) {
         try {
@@ -29,7 +36,7 @@ public class GaussianBlur {
             // 0 = Tryb Sekwencyjny
             // 1 (lub dowolna inna) = Tryb Fork-Join
             // ==========================================
-            int MODE = 0;
+            int MODE = 1; // Od razu ustawione na Fork-Join
 
             long startTime = System.currentTimeMillis();
 
@@ -42,9 +49,12 @@ public class GaussianBlur {
                 int height = sourceImage.getHeight();
                 resultImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
+                @SuppressWarnings("resource")
                 ForkJoinPool pool = new ForkJoinPool();
-                BlurTask mainTask = new BlurTask(sourceImage, resultImage, 1, height - 1, width);
-                
+                // Marginesy ustawione na RADIUS, żeby nie wyjść poza tablicę
+                BlurTask mainTask =
+                        new BlurTask(sourceImage, resultImage, RADIUS, height - RADIUS, width);
+
                 pool.invoke(mainTask);
                 pool.shutdown();
             }
@@ -68,14 +78,14 @@ public class GaussianBlur {
         int h = src.getHeight();
         BufferedImage dst = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
 
-        for (int y = 1; y < h - 1; y++) {
-            for (int x = 1; x < w - 1; x++) {
+        for (int y = RADIUS; y < h - RADIUS; y++) {
+            for (int x = RADIUS; x < w - RADIUS; x++) {
 
                 float r = 0, g = 0, b = 0;
                 int kIdx = 0;
 
-                for (int ky = -1; ky <= 1; ky++) {
-                    for (int kx = -1; kx <= 1; kx++) {
+                for (int ky = -RADIUS; ky <= RADIUS; ky++) {
+                    for (int kx = -RADIUS; kx <= RADIUS; kx++) {
                         int rgb = src.getRGB(x + kx, y + ky);
                         float weight = KERNEL[kIdx++];
 
@@ -97,7 +107,6 @@ public class GaussianBlur {
      */
     static class BlurTask extends RecursiveAction {
 
-        // Próg podziału zadania - określa, ile maksymalnie wierszy przetworzy pojedynczy wątek.
         private static final int THRESHOLD = 100;
 
         private final BufferedImage src;
@@ -130,13 +139,13 @@ public class GaussianBlur {
 
         private void computeDirectly() {
             for (int y = startY; y < endY; y++) {
-                for (int x = 1; x < width - 1; x++) {
+                for (int x = RADIUS; x < width - RADIUS; x++) {
 
                     float r = 0, g = 0, b = 0;
                     int kIdx = 0;
 
-                    for (int ky = -1; ky <= 1; ky++) {
-                        for (int kx = -1; kx <= 1; kx++) {
+                    for (int ky = -RADIUS; ky <= RADIUS; ky++) {
+                        for (int kx = -RADIUS; kx <= RADIUS; kx++) {
                             int rgb = src.getRGB(x + kx, y + ky);
                             float weight = KERNEL[kIdx++];
 
