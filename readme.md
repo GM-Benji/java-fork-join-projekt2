@@ -43,9 +43,6 @@ Przebiegi zużycia procesora dla obu trybów:
 
 W trybie sekwencyjnym obciążenie CPU utrzymuje się na poziomie kilkunastu procent, co wynika z użycia pojedynczego rdzenia. Natomiast w trybie Fork-Join widoczne jest znacznie wyższe obciążenie procesora, sięgające nawet 60%. Jest to efekt równoległego przetwarzania zadań na wielu rdzeniach, co przekłada się na skrócenie czasu wykonania programu.
 
-### Work-stealing
-
-Analiza wykresów z profilera ujawniła kluczową cechę frameworka Fork-Join: poszczególne wątki robotnicze kończą swoje cykle życia niemal w dokładnie tym samym momencie. Jest to bezpośredni dowód na poprawne działanie algorytmu work-stealing - gdy dany wątek opróżni swoją kolejkę, nie przechodzi w stan uśpienia (co marnowałoby czas procesora). Zamiast tego dynamicznie "kradnie" zadania z przeciwnego końca kolejki innego, wciąż obciążonego wątku.Profiler pokazuje równomierne rozłożenie obciążenia i jednoczesne wygaszanie wątków.
 
 ### Wnioski końcowe
 
